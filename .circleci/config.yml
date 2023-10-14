@@ -2,7 +2,8 @@ version: 2.1
 jobs:
   preview_deployment:
     docker:
-      - image: circleci/node:20
+      - image: circleci/node:latest
+    parallelism: 4
     environment:
       VERCEL_ORG_ID: $VERCEL_ORG_ID
       VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
@@ -16,7 +17,7 @@ jobs:
           command: sudo vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
       - run:
           name: Build Project Artifacts
-          command: sudo vercel build --token=$VERCEL_TOKEN
+          command: npm run build
       - run:
           name: Deploy Project Artifacts to Vercel
           command: sudo vercel deploy --prebuilt --token=$VERCEL_TOKEN
@@ -37,7 +38,7 @@ jobs:
           command: sudo vercel pull --yes --environment=production --token=$VERCEL_TOKEN
       - run:
           name: Build Project Artifacts
-          command: sudo vercel build --prod --token=$VERCEL_TOKEN
+          command: npm run build
       - run:
           name: Deploy Project Artifacts to Vercel
           command: sudo vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
