@@ -1,56 +1,56 @@
-<!-- <template>
-  <div>
-    <ImageSlider />
-  </div>
-</template>
-
-<script>
-import ImageSlider from "~/components/ImageSlider/App.vue";
-
-export default {
-  components: {
-    ImageSlider,
-  },
-};
-</script> -->
-
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
-const message = ref('Nuxt')
-
 const route = useRoute()
 </script>
 
 <template>
   <NuxtExampleLayout
     repo="nuxt/examples"
-    example="routing/middleware"
+    example="routing/pages"
   >
+    <NuxtLoadingIndicator />
     <NuxtPage />
 
     <template #nav>
       <nav class="flex align-center gap-4 p-4">
         <NuxtLink
-          to="/"
+          to="/slider"
           class="n-link-base"
         >
           Home
         </NuxtLink>
         <NuxtLink
-          to="/forbidden"
+          to="/about"
           class="n-link-base"
         >
-          Forbidden
+          About
         </NuxtLink>
         <NuxtLink
-          to="/redirect"
+          to="/parent"
           class="n-link-base"
         >
-          Redirect
+          Parent (index)
         </NuxtLink>
+        <NuxtLink
+          to="/parent/b"
+          class="n-link-base"
+        >
+          Parent (b)
+        </NuxtLink>
+        <button
+          class="n-link-base"
+          @click="$router.push(`/parent/reload-${(Math.random() * 100).toFixed()}`)"
+        >
+          Keyed child
+        </button>
+        <button
+          class="n-link-base"
+          @click="$router.push(`/parent/static-${(Math.random() * 100).toFixed()}`)"
+        >
+          Non-keyed child
+        </button>
       </nav>
     </template>
-
+ 
     <template #footer>
       <div class="text-center p-4 op-50">
         Current route: <code>{{ route.path }}</code>
@@ -58,4 +58,3 @@ const route = useRoute()
     </template>
   </NuxtExampleLayout>
 </template>
-

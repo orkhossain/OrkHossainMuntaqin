@@ -1,39 +1,41 @@
 <template>
-  <swiper
-    :effect="'coverflow'"
-    :grab-cursor="true"
-    :centered-slides="true"
-    :slides-per-view="'auto'"
-    :autoplay="{
-      delay: 5000,
-      disableOnInteraction: false,
-    }"
-    :coverflow-effect="{
-      rotate: 50,
-      stretch: 0,
-      depth: 100,
-      modifier: 1,
-      slideShadows: true,
-    }"
-    :modules="modules"
-    :initial-slide="currentImageIndex"
-    class="mySwiper"
-  >
+  <div>
+    <swiper
+      :effect="'coverflow'"
+      :grab-cursor="true"
+      :centered-slides="true"
+      :slides-per-view="'auto'"
+      :autoplay="{
+        delay: 5000,
+        disableOnInteraction: false,
+      }"
+      :coverflow-effect="{
+        rotate: 50,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: true,
+      }"
+      :modules="modules"
+      :initial-slide="currentImageIndex"
+      class="mySwiper"
     >
-    <swiper-slide
-      v-for="(imageUrl, index) in images"
-      :key="index"
-    >
-      <div
-        class="imageViewer"
-        style="position: relative;"
       >
-        <img
-          :src="imageUrl"
+      <swiper-slide
+        v-for="(imageUrl, index) in images"
+        :key="index"
+      >
+        <div
+          class="imageViewer"
+          style="position: relative;"
         >
-      </div>
-    </swiper-slide>
-  </swiper>
+          <img
+            :src="imageUrl"
+          >
+        </div>
+      </swiper-slide>
+    </swiper>
+  </div>
 </template>
   
   <script>
