@@ -1,58 +1,45 @@
 version: 2.1
 jobs:
-  preview_deployment:
+  build:
     docker:
-      - image: circleci/node:latest
-    environment:
-      VERCEL_ORG_ID: $VERCEL_ORG_ID
-      VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
-    parallelism: 2  # Number of parallel jobs
+      - image: cimg/node:16
     steps:
       - checkout
       - run:
-          name: Install Vercel CLI
-          command: sudo npm install -g vercel@latest
+          name: Install dependencies
+          command: npm install
       - run:
-          name: Pull Vercel Environment Information
-          command: sudo vercel pull --yes --environment=preview --token $VERCEL_TOKEN
-      - run:
-          name: Build Project Artifacts
-          command: sudo vercel build --token $VERCEL_TOKEN
-      - run:
-          name: Deploy Project Artifacts to Vercel
-          command: sudo vercel deploy --prebuilt --token $VERCEL_TOKEN
-
-  production_deployment:
+          name: Build Nuxt.js app
+          command: npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .nuxt
+            - static
+            - node_modules
+      - store_artifacts:
+          path: .nuxt
+          destination: .nuxt
+      - store_artifacts:
+          path: static
+          destination: static
+  deploy:
     docker:
-      - image: circleci/node:latest
-    environment:
-      VERCEL_ORG_ID: $VERCEL_ORG_ID
-      VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
-    parallelism: 2  # Number of parallel jobs
+      - image: cimg/node:16
     steps:
-      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
       - run:
           name: Install Vercel CLI
-          command: sudo npm install -g vercel@latest
+          command: npm install -g vercel
       - run:
-          name: Pull Vercel Environment Information
-          command: sudo vercel pull --yes --environment=production --token $VERCEL_TOKEN
-      - run:
-          name: Build Project Artifacts
-          command: sudo vercel build --prod --token $VERCEL_TOKEN
-      - run:
-          name: Deploy Project Artifacts to Vercel
-          command: sudo vercel deploy --prebuilt --prod --token $VERCEL_TOKEN
-
+          name: Deploy to Vercel
+          command: vercel deploy --prod
 workflows:
   version: 2
-  preview_and_production:
+  build_and_deploy:
     jobs:
-      - preview_deployment:
-          filters:
-            branches:
-              ignore: /main/
-      - production_deployment:
-          filters:
-            branches:
-              only: /main/
+      - build
+      - deploy:
+          requires:
+            - build
