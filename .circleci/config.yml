@@ -16,9 +16,6 @@ jobs:
           name: Pull Vercel Environment Information
           command: sudo vercel pull --yes --environment=preview --token=$VERCEL_TOKEN --force 
       - run:
-          name: Build Project Artifacts
-          command: sudo vercel build --token=$VERCEL_TOKEN --force 
-      - run:
           name: Deploy Project Artifacts to Vercel
           command: sudo vercel deploy --prebuilt --token=$VERCEL_TOKEN --force 
 
@@ -34,9 +31,6 @@ jobs:
       - run:
           name: Install Vercel CLI
           command: sudo npm install -g vercel@latest
-      - run:
-          name: Pull Vercel Environment Information
-          command: sudo vercel pull --yes --environment=production --token=$VERCEL_TOKEN --force 
       - run:
           name: Build Project Artifacts
           command: sudo vercel build --prod --token=$VERCEL_TOKEN --force 
