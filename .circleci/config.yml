@@ -32,13 +32,13 @@ jobs:
       - checkout
       - run:
           name: Install Vercel CLI
-          command: sudo npm install --global vercel@latest
+          command: sudo npm install --global vercel@latest bun
       - run:
           name: Pull Vercel Environment Information
           command: sudo vercel pull --yes --environment=production --token=$VERCEL_TOKEN
       - run:
           name: Build Project Artifacts
-          command: sudo vercel build --token=$VERCEL_TOKEN
+          command: sudo bun run build --token=$VERCEL_TOKEN
       - run:
           name: Deploy Project Artifacts to Vercel
           command: sudo vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
