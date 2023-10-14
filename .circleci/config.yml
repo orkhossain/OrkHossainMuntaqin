@@ -32,7 +32,7 @@ jobs:
       - checkout
       - run:
           name: Install Vercel CLI
-          command: sudo bun install --global vercel@latest
+          command: sudo npm install --global vercel@latest
       - run:
           name: Pull Vercel Environment Information
           command: sudo vercel pull --yes --environment=production --token=$VERCEL_TOKEN
