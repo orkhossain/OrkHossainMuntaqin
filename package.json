@@ -27,6 +27,10 @@
     "swiper": "^10.3.1",
     "vercel": "^32.4.1"
   },
+  "engines": {
+    "npm": ">=8.0.0 <9.0.0",
+    "node": ">=16.0.0 <18.0.0"
+  },
   "extends": [
     "plugin:vue/essential",
     "plugin:prettier/recommended",
