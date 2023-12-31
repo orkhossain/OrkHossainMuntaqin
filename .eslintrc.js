@@ -3,7 +3,7 @@ module.exports = {
       node: true,
     },
     extends: [
-      '@nuxt/eslint-config',
+      // '@nuxt/eslint-config',
       'plugin:vue/vue3-recommended',
     ],
     rules: {

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import ImageSlider from "~/pages/slider";
+import ImageSlider from "./slider/index.vue";
 
 export default {
   components: {
